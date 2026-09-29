@@ -1,0 +1,2931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Prime Capital - Ultimate Luxury Investment Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --apex-gold: #D4AF37;
+  --apex-gold-light: #F4E4BC;
+  --apex-gold-dark: #B8941F;
+  --apex-black: #0A0A0A;
+  --apex-charcoal: #141414;
+  --apex-gray: #1E1E1E;
+  --apex-border: rgba(212, 175, 55, 0.2);
+  --success: #00D084;
+  --danger: #FF4757;
+  --glow-intensity: 0.5;
+}
+
+html, body {
+  font-family: 'Inter', sans-serif;
+  background: var(--apex-black);
+  color: #fff;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Loading Screen */
+.loading-screen {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: var(--apex-black);
+  z-index: 100000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loading-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--apex-gold-light), var(--apex-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.loading-bar {
+  width: 300px;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  margin-top: 2rem;
+  overflow: hidden;
+}
+
+.loading-progress {
+  height: 100%;
+  background: linear-gradient(90deg, var(--apex-gold), var(--apex-gold-light));
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* Welcome Overlay */
+.welcome-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.welcome-overlay.active {
+  display: flex;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.welcome-icon {
+  font-size: 6rem;
+  color: var(--apex-gold);
+  margin-bottom: 2rem;
+  animation: rotateScale 1s ease;
+}
+
+@keyframes rotateScale {
+  from { transform: rotate(-180deg) scale(0); }
+  to { transform: rotate(0) scale(1); }
+}
+
+.welcome-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* Voice Prompt */
+.voice-prompt {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--apex-charcoal);
+  border: 1px solid var(--apex-border);
+  border-radius: 24px;
+  padding: 2rem;
+  z-index: 100001;
+  text-align: center;
+  display: none;
+  max-width: 400px;
+}
+
+.voice-prompt.active {
+  display: block;
+}
+
+/* Login Section */
+.login-container {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.login-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem;
+  background: linear-gradient(135deg, var(--apex-black), var(--apex-charcoal));
+  border-right: 1px solid var(--apex-border);
+}
+
+.login-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem;
+  background: var(--apex-charcoal);
+}
+
+.brand-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--apex-gold-light), var(--apex-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.brand-subtitle {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 3rem;
+}
+
+/* Form Styles */
+.luxury-input {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.03);
+  border: 2px solid var(--apex-border);
+  border-radius: 12px;
+  color: #fff;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.luxury-input:focus {
+  outline: none;
+  border-color: var(--apex-gold);
+  box-shadow: 0 0 20px rgba(212,175,55,0.2);
+}
+
+.luxury-input.error {
+  border-color: var(--danger);
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+.error-message {
+  color: var(--danger);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  display: none;
+}
+
+.error-message.visible {
+  display: block;
+}
+
+.luxury-btn {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, var(--apex-gold), var(--apex-gold-dark));
+  border: none;
+  border-radius: 12px;
+  color: var(--apex-black);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.luxury-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(212,175,55,0.3);
+}
+
+.luxury-btn-secondary {
+  background: transparent;
+  border: 2px solid var(--apex-gold);
+  color: var(--apex-gold);
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 1rem;
+  background: rgba(255,255,255,0.03);
+  border: 2px solid var(--apex-border);
+  border-radius: 10px;
+  color: rgba(255,255,255,0.6);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.auth-tab.active {
+  background: rgba(212,175,55,0.1);
+  border-color: var(--apex-gold);
+  color: var(--apex-gold);
+}
+
+/* Investor Cards */
+.investor-showcase {
+  position: relative;
+  height: 450px;
+  margin-top: 2rem;
+}
+
+.investor-card {
+  position: absolute;
+  width: 300px;
+  padding: 1.5rem;
+  background: linear-gradient(145deg, rgba(212,175,55,0.1), rgba(20,20,20,0.95));
+  border: 1px solid var(--apex-border);
+  border-radius: 20px;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease;
+}
+
+.investor-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.investor-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  border-color: var(--apex-gold);
+  box-shadow: 0 20px 50px rgba(212,175,55,0.2);
+}
+
+.investor-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--apex-gold), var(--apex-gold-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--apex-black);
+  margin-bottom: 1rem;
+}
+
+.investor-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.investor-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--apex-border);
+}
+
+.investor-stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--apex-gold);
+}
+
+.investor-stat-label {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+}
+
+/* Market Stats */
+.market-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.market-stat {
+  padding: 1.5rem;
+  background: rgba(212,175,55,0.05);
+  border: 1px solid var(--apex-border);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.market-stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--apex-gold);
+}
+
+/* Dashboard */
+.dashboard {
+  display: none;
+  min-height: 100vh;
+}
+
+.dashboard.active {
+  display: block;
+}
+
+/* Top Nav */
+.top-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 80px;
+  background: rgba(10,10,10,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--apex-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  z-index: 1000;
+}
+
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--apex-gold);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--apex-gold);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.balance-pill {
+  padding: 0.75rem 1.5rem;
+  background: rgba(212,175,55,0.1);
+  border: 1px solid var(--apex-border);
+  border-radius: 50px;
+  font-weight: 700;
+  color: var(--apex-gold);
+}
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--apex-border);
+  border-radius: 10px;
+  color: var(--apex-gold);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.icon-btn:hover {
+  background: var(--apex-gold);
+  color: var(--apex-black);
+  transform: scale(1.1);
+}
+
+/* Toggle Buttons */
+.toggle-btn {
+  position: fixed;
+  top: 100px;
+  width: 40px;
+  height: 40px;
+  background: var(--apex-gold);
+  border: none;
+  border-radius: 8px;
+  color: var(--apex-black);
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+
+.toggle-btn.left { left: 10px; }
+.toggle-btn.right { right: 10px; }
+
+.toggle-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Sidebars */
+.sidebar {
+  position: fixed;
+  top: 80px;
+  bottom: 50px;
+  width: 280px;
+  background: rgba(20,20,20,0.95);
+  border-right: 1px solid var(--apex-border);
+  z-index: 100;
+  overflow-y: auto;
+  padding: 1.5rem;
+  transition: transform 0.5s ease;
+}
+
+.sidebar.left { left: 0; }
+.sidebar.right { right: 0; border-right: none; border-left: 1px solid var(--apex-border); }
+
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+.sidebar.right.collapsed {
+  transform: translateX(100%);
+}
+
+.sidebar-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--apex-gold);
+  margin-bottom: 1rem;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 0.5rem;
+}
+
+.menu-item:hover {
+  background: rgba(212,175,55,0.1);
+}
+
+.menu-item.active {
+  background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(212,175,55,0.05));
+  border: 1px solid var(--apex-border);
+}
+
+.menu-icon {
+  width: 36px;
+  height: 36px;
+  background: rgba(212,175,55,0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--apex-gold);
+}
+
+/* Main Content */
+.main-content {
+  margin-top: 80px;
+  margin-left: 280px;
+  margin-right: 280px;
+  padding: 2rem;
+  min-height: calc(100vh - 130px);
+  transition: margin 0.5s ease;
+}
+
+.main-content.left-closed { margin-left: 0; }
+.main-content.right-closed { margin-right: 0; }
+
+/* Sections */
+.section {
+  background: rgba(20,20,20,0.95);
+  border: 1px solid var(--apex-border);
+  border-radius: 20px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.section-header {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(212,175,55,0.1), transparent);
+  border-bottom: 1px solid var(--apex-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.section-toggle {
+  color: var(--apex-gold);
+  transition: transform 0.3s ease;
+}
+
+.section.collapsed .section-toggle {
+  transform: rotate(-90deg);
+}
+
+.section-content {
+  padding: 2rem;
+  max-height: 2000px;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.5s ease;
+}
+
+.section.collapsed .section-content {
+  max-height: 0;
+  padding: 0 2rem;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--apex-border);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--apex-gold);
+  box-shadow: 0 15px 40px rgba(212,175,55,0.15);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+/* Chart Container */
+.chart-container {
+  height: 350px;
+  margin-bottom: 2rem;
+}
+
+/* Investment Cards */
+.investment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.investment-card {
+  padding: 1.5rem;
+  background: linear-gradient(145deg, rgba(212,175,55,0.05), rgba(20,20,20,0.95));
+  border: 1px solid var(--apex-border);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.investment-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--apex-gold);
+  box-shadow: 0 20px 60px rgba(212,175,55,0.2);
+}
+
+.investment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.investment-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.investment-tier {
+  padding: 0.25rem 0.75rem;
+  background: var(--apex-gold);
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--apex-black);
+  text-transform: uppercase;
+}
+
+.investment-return {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--success);
+  margin: 1rem 0;
+}
+
+.investment-desc {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.6;
+}
+
+.invest-btn {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: transparent;
+  border: 2px solid var(--apex-gold);
+  border-radius: 10px;
+  color: var(--apex-gold);
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.invest-btn:hover {
+  background: var(--apex-gold);
+  color: var(--apex-black);
+}
+
+/* Luxury Marketplace */
+.marketplace-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.luxury-item {
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--apex-border);
+  border-radius: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.luxury-item:hover {
+  border-color: var(--apex-gold);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(212,175,55,0.15);
+}
+
+.luxury-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.luxury-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.luxury-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--apex-gold);
+}
+
+/* News Section */
+.news-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.news-tab {
+  padding: 0.75rem 1.5rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--apex-border);
+  border-radius: 8px;
+  color: rgba(255,255,255,0.6);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.news-tab.active {
+  background: rgba(212,175,55,0.1);
+  border-color: var(--apex-gold);
+  color: var(--apex-gold);
+}
+
+.news-item {
+  padding: 1rem;
+  border-bottom: 1px solid var(--apex-border);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.news-item:hover {
+  background: rgba(212,175,55,0.05);
+}
+
+.news-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.news-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+}
+
+.news-source {
+  color: var(--apex-gold);
+}
+
+/* FAQ */
+.faq-item {
+  border-bottom: 1px solid var(--apex-border);
+}
+
+.faq-question {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.faq-question h4 {
+  font-weight: 600;
+}
+
+.faq-icon {
+  color: var(--apex-gold);
+  transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-icon {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 500px;
+}
+
+.faq-answer p {
+  padding: 0 1.5rem 1.5rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.8;
+}
+
+/* History Timeline */
+.timeline {
+  position: relative;
+  padding-left: 30px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--apex-gold), transparent);
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -34px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  background: var(--apex-gold);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(212,175,55,0.4);
+}
+
+.timeline-date {
+  font-size: 0.9rem;
+  color: var(--apex-gold);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-title {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-desc {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+}
+
+/* Payment Methods */
+.payment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.payment-method {
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.03);
+  border: 2px solid var(--apex-border);
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.payment-method:hover {
+  border-color: var(--apex-gold);
+  transform: translateY(-3px);
+}
+
+.payment-method.selected {
+  border-color: var(--apex-gold);
+  background: rgba(212,175,55,0.1);
+}
+
+.payment-method i {
+  font-size: 2rem;
+  color: var(--apex-gold);
+  margin-bottom: 0.75rem;
+}
+
+.payment-method span {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Modals */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(10px);
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  display: flex;
+  opacity: 1;
+}
+
+.modal {
+  width: 90%;
+  max-width: 550px;
+  max-height: 90vh;
+  background: linear-gradient(145deg, var(--apex-charcoal), var(--apex-black));
+  border: 1px solid var(--apex-border);
+  border-radius: 24px;
+  padding: 2rem;
+  overflow-y: auto;
+  transform: scale(0.9) translateY(50px);
+  transition: transform 0.5s ease;
+}
+
+.modal-overlay.active .modal {
+  transform: scale(1) translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.modal-close {
+  width: 44px;
+  height: 44px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--apex-border);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  background: var(--danger);
+  border-color: var(--danger);
+  transform: rotate(90deg);
+}
+
+/* Customization Panel */
+.custom-panel {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  width: 300px;
+  background: var(--apex-charcoal);
+  border: 1px solid var(--apex-border);
+  border-radius: 20px;
+  padding: 1.5rem;
+  z-index: 2000;
+  display: none;
+}
+
+.custom-panel.active {
+  display: block;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.custom-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--apex-border);
+}
+
+.setting-row:last-child {
+  border-bottom: none;
+}
+
+.setting-label {
+  font-weight: 600;
+}
+
+.toggle-switch {
+  width: 50px;
+  height: 26px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 13px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggle-switch.active {
+  background: var(--apex-gold);
+}
+
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.toggle-switch.active::after {
+  transform: translateX(24px);
+}
+
+.slider-container {
+  margin-top: 0.5rem;
+}
+
+.slider-container input {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.slider-container input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--apex-gold);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.color-picker {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.color-option {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.color-option:hover,
+.color-option.active {
+  border-color: #fff;
+  transform: scale(1.2);
+}
+
+/* Customer Service */
+.cs-widget {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  z-index: 1500;
+}
+
+.cs-button {
+  width: 65px;
+  height: 65px;
+  background: linear-gradient(135deg, var(--apex-gold), var(--apex-gold-dark));
+  border: none;
+  border-radius: 50%;
+  color: var(--apex-black);
+  font-size: 1.6rem;
+  cursor: pointer;
+  box-shadow: 0 10px 40px rgba(212,175,55,0.4);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.cs-panel {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  width: 360px;
+  height: 450px;
+  background: var(--apex-charcoal);
+  border: 1px solid var(--apex-border);
+  border-radius: 20px;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.cs-panel.active {
+  display: flex;
+}
+
+.cs-header {
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(212,175,55,0.05));
+  border-bottom: 1px solid var(--apex-border);
+}
+
+.cs-messages {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cs-message {
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  max-width: 80%;
+}
+
+.cs-message.agent {
+  background: rgba(212,175,55,0.1);
+  border: 1px solid var(--apex-border);
+  align-self: flex-start;
+}
+
+.cs-message.user {
+  background: var(--apex-gold);
+  color: var(--apex-black);
+  align-self: flex-end;
+}
+
+.cs-input-area {
+  padding: 1rem;
+  border-top: 1px solid var(--apex-border);
+  display: flex;
+  gap: 0.75rem;
+}
+
+.cs-input {
+  flex: 1;
+  padding: 0.75rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--apex-border);
+  border-radius: 10px;
+  color: #fff;
+}
+
+.cs-send {
+  width: 44px;
+  background: var(--apex-gold);
+  border: none;
+  border-radius: 10px;
+  color: var(--apex-black);
+  cursor: pointer;
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  z-index: 10001;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.toast {
+  padding: 1.25rem;
+  background: linear-gradient(135deg, var(--apex-charcoal), rgba(212,175,55,0.1));
+  border: 1px solid var(--apex-gold);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 320px;
+  animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.toast-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--apex-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--apex-black);
+}
+
+.toast-content h4 {
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.toast-amount {
+  margin-left: auto;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: var(--success);
+}
+
+/* Bottom Ticker */
+.bottom-ticker {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: rgba(10,10,10,0.98);
+  border-top: 1px solid var(--apex-border);
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.ticker-wrap {
+  display: flex;
+  animation: ticker 40s linear infinite;
+  white-space: nowrap;
+  padding: 15px 0;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 2rem;
+}
+
+.ticker-symbol {
+  font-weight: 700;
+  color: var(--apex-gold);
+}
+
+/* Social Links */
+.social-links {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.social-link {
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--apex-border);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--apex-gold);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background: var(--apex-gold);
+  color: var(--apex-black);
+  transform: translateY(-3px);
+}
+
+/* Trades List */
+.trade-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--apex-border);
+  animation: slideInRight 0.5s ease;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.trade-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.trade-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--apex-gold), var(--apex-gold-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--apex-black);
+}
+
+.trade-info h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.trade-info span {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+}
+
+.trade-amount {
+  font-weight: 700;
+}
+
+.trade-type {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.trade-type.buy {
+  background: rgba(0,208,132,0.2);
+  color: var(--success);
+}
+
+.trade-type.sell {
+  background: rgba(255,71,87,0.2);
+  color: var(--danger);
+}
+
+/* Referral Card */
+.referral-card {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(20,20,20,0.95));
+  border: 1px solid var(--apex-border);
+  border-radius: 16px;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.referral-title {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.referral-text {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 1rem;
+}
+
+.referral-code {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.referral-code input {
+  flex: 1;
+  padding: 0.75rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--apex-border);
+  border-radius: 8px;
+  color: var(--apex-gold);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Profile Section */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-avatar-large {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--apex-gold), var(--apex-gold-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--apex-black);
+  position: relative;
+}
+
+.profile-avatar-upload {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  background: var(--apex-charcoal);
+  border: 2px solid var(--apex-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.vip-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, var(--apex-gold), var(--apex-gold-dark));
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--apex-black);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--apex-charcoal);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--apex-gold);
+  border-radius: 4px;
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .investment-grid { grid-template-columns: repeat(2, 1fr); }
+  .marketplace-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 1200px) {
+  .login-container { grid-template-columns: 1fr; }
+  .login-right { display: none; }
+  .sidebar { width: 260px; }
+  .main-content { margin-left: 260px; margin-right: 260px; }
+}
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.right { transform: translateX(100%); }
+  .main-content { margin-left: 0; margin-right: 0; }
+  .stats-grid,
+  .investment-grid,
+  .marketplace-grid,
+  .payment-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-logo">APEX PRIME</div>
+  <div class="loading-bar">
+    <div class="loading-progress" id="loadingProgress"></div>
+  </div>
+</div>
+
+<!-- Welcome Overlay -->
+<div class="welcome-overlay" id="welcomeOverlay">
+  <div class="welcome-icon"><i class="fas fa-crown"></i></div>
+  <div class="welcome-title">Welcome Back</div>
+  <div style="color: rgba(255,255,255,0.7);">Your Premium Investment Awaits</div>
+</div>
+
+<!-- Voice Prompt -->
+<div class="voice-prompt" id="voicePrompt">
+  <div style="font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 1rem;">Enable Voice Assistance?</div>
+  <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; font-size: 0.9rem;">Would you like audio voiceover for all interactions?</p>
+  <button class="luxury-btn" onclick="enableVoice(true)" style="margin-bottom: 0.5rem;">Yes, Enable</button>
+  <button class="luxury-btn luxury-btn-secondary" onclick="enableVoice(false)">No, Thanks</button>
+</div>
+
+<!-- Login Section -->
+<div class="login-container" id="loginSection">
+  <div class="login-left">
+    <div class="brand-title">APEX PRIME</div>
+    <div class="brand-subtitle">Capital Investment</div>
+    <p style="color: rgba(255,255,255,0.7); margin-bottom: 2rem; line-height: 1.8;">
+      Experience institutional-grade wealth management with unparalleled sophistication. Join over 1 million elite investors worldwide.
+    </p>
+    
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchTab('login')">Sign In</button>
+      <button class="auth-tab" onclick="switchTab('register')">Create Account</button>
+    </div>
+    
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <input type="email" class="luxury-input" id="loginEmail" placeholder="Email Address" required>
+      <input type="password" class="luxury-input" id="loginPassword" placeholder="Password" required>
+      <div class="error-message" id="loginError">Invalid credentials. Please check your password.</div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <label style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.6); font-size: 0.9rem;">
+          <input type="checkbox" style="accent-color: var(--apex-gold);"> Remember me
+        </label>
+        <a href="#" style="color: var(--apex-gold); font-size: 0.9rem;">Forgot Password?</a>
+      </div>
+      <button type="submit" class="luxury-btn">Access Trading Floor</button>
+    </form>
+    
+    <form id="registerForm" style="display: none;" onsubmit="handleRegister(event)">
+      <input type="text" class="luxury-input" id="regName" placeholder="Full Name" required>
+      <input type="email" class="luxury-input" id="regEmail" placeholder="Email Address" required>
+      <input type="password" class="luxury-input" id="regPassword" placeholder="Create Password" required>
+      <input type="password" class="luxury-input" id="regConfirm" placeholder="Confirm Password" required>
+      <div class="error-message" id="regError">Passwords do not match.</div>
+      <label style="display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 1rem; color: rgba(255,255,255,0.6); font-size: 0.85rem;">
+        <input type="checkbox" required style="margin-top: 0.2rem; accent-color: var(--apex-gold);">
+        <span>I agree to Terms of Service and consent to receiving investment notifications and birthday rewards.</span>
+      </label>
+      <button type="submit" class="luxury-btn">Create Premium Account</button>
+    </form>
+    
+    <div style="margin-top: 2rem;">
+      <div style="text-align: center; color: rgba(255,255,255,0.5); margin-bottom: 1rem; font-size: 0.85rem;">Or continue with</div>
+      <div class="social-links" style="justify-content: flex-start;">
+        <div class="social-link" onclick="socialLogin('google')"><i class="fab fa-google"></i></div>
+        <div class="social-link" onclick="socialLogin('apple')"><i class="fab fa-apple"></i></div>
+        <div class="social-link" onclick="socialLogin('linkedin')"><i class="fab fa-linkedin-in"></i></div>
+        <div class="social-link" onclick="socialLogin('twitter')"><i class="fab fa-twitter"></i></div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="login-right">
+    <div style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 600; margin-bottom: 2rem;">Top Performing Investors</div>
+    
+    <div class="investor-showcase">
+      <div class="investor-card" style="top: 0; left: 0;">
+        <div class="investor-avatar">JM</div>
+        <div class="investor-name">Jodii M.</div>
+        <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 1rem;">Elite Investor • Diamond Tier</div>
+        <div class="investor-stats">
+          <div>
+            <div class="investor-stat-value">£4,500</div>
+            <div class="investor-stat-label">Invested</div>
+          </div>
+          <div>
+            <div class="investor-stat-value" style="color: var(--success);">+£52,700</div>
+            <div class="investor-stat-label">Profit</div>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--apex-border);">
+          <div style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--apex-gold);">+1,171%</div>
+          <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">Annual Return</div>
+        </div>
+      </div>
+      
+      <div class="investor-card" style="top: 40px; left: 320px;">
+        <div class="investor-avatar" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">SK</div>
+        <div class="investor-name">Sammy K.</div>
+        <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 1rem;">Pro Trader • Platinum Tier</div>
+        <div class="investor-stats">
+          <div>
+            <div class="investor-stat-value">£12,000</div>
+            <div class="investor-stat-label">Invested</div>
+          </div>
+          <div>
+            <div class="investor-stat-value" style="color: var(--success);">+£28,400</div>
+            <div class="investor-stat-label">Profit</div>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--apex-border);">
+          <div style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--apex-gold);">+237%</div>
+          <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">Annual Return</div>
+        </div>
+      </div>
+      
+      <div class="investor-card" style="top: 80px; left: 640px;">
+        <div class="investor-avatar" style="background: linear-gradient(135deg, #22c55e, #16a34a);">MR</div>
+        <div class="investor-name">Michael R.</div>
+        <div style="color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 1rem;">VIP Member • Gold Tier</div>
+        <div class="investor-stats">
+          <div>
+            <div class="investor-stat-value">£25,000</div>
+            <div class="investor-stat-label">Invested</div>
+          </div>
+          <div>
+            <div class="investor-stat-value" style="color: var(--success);">+£41,250</div>
+            <div class="investor-stat-label">Profit</div>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--apex-border);">
+          <div style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--apex-gold);">+165%</div>
+          <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">Annual Return</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="market-stats">
+      <div class="market-stat">
+        <div class="market-stat-value">£2.4B</div>
+        <div style="font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 0.5rem;">Assets Managed</div>
+      </div>
+      <div class="market-stat">
+        <div class="market-stat-value">34.7%</div>
+        <div style="font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 0.5rem;">Avg Returns</div>
+      </div>
+      <div class="market-stat">
+        <div class="market-stat-value">400+</div>
+        <div style="font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 0.5rem;">Active Traders</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div class="dashboard" id="dashboard">
+  
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="nav-brand">APEX PRIME</div>
+    <div class="nav-links">
+      <div class="nav-link active" onclick="navigate('dashboard')">Dashboard</div>
+      <div class="nav-link" onclick="navigate('portfolio')">Portfolio</div>
+      <div class="nav-link" onclick="navigate('markets')">Markets</div>
+      <div class="nav-link" onclick="navigate('trading')">Trading</div>
+      <div class="nav-link" onclick="navigate('luxury')">Luxury</div>
+    </div>
+    <div class="nav-actions">
+      <div class="balance-pill">£147,250.00</div>
+      <button class="icon-btn" onclick="toggleNotifs()"><i class="fas fa-bell"></i></button>
+      <button class="icon-btn" onclick="toggleCustom()"><i class="fas fa-paint-brush"></i></button>
+      <button class="icon-btn" onclick="toggleProfile()"><i class="fas fa-user"></i></button>
+      <button class="icon-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+    </div>
+  </nav>
+  
+  <!-- Toggle Buttons -->
+  <button class="toggle-btn left" onclick="toggleSidebar('left')"><i class="fas fa-bars"></i></button>
+  <button class="toggle-btn right" onclick="toggleSidebar('right')"><i class="fas fa-chart-line"></i></button>
+  
+  <!-- Left Sidebar -->
+  <aside class="sidebar left" id="leftSidebar">
+    <div class="sidebar-title">Profile</div>
+    <div class="profile-header">
+      <div class="profile-avatar-large" id="userAvatar">
+        <span id="userInitials">JD</span>
+        <div class="profile-avatar-upload" onclick="uploadAvatar()"><i class="fas fa-camera"></i></div>
+      </div>
+      <div>
+        <div style="font-weight: 700;" id="userName">John Doe</div>
+        <div style="font-size: 0.85rem; color: rgba(255,255,255,0.5);" id="userEmail">john@apexprime.com</div>
+        <div class="vip-badge" style="margin-top: 0.5rem;"><i class="fas fa-crown"></i> Diamond</div>
+      </div>
+    </div>
+    
+    <div class="sidebar-title">Quick Actions</div>
+    <div class="menu-item active" onclick="openModal('depositModal')">
+      <div class="menu-icon"><i class="fas fa-plus"></i></div>
+      <div>Deposit</div>
+    </div>
+    <div class="menu-item" onclick="openModal('withdrawModal')">
+      <div class="menu-icon"><i class="fas fa-minus"></i></div>
+      <div>Withdraw</div>
+    </div>
+    <div class="menu-item" onclick="openModal('investModal')">
+      <div class="menu-icon"><i class="fas fa-chart-line"></i></div>
+      <div>Invest Now</div>
+    </div>
+    <div class="menu-item" onclick="openModal('transferModal')">
+      <div class="menu-icon"><i class="fas fa-exchange-alt"></i></div>
+      <div>Transfer</div>
+    </div>
+    
+    <div class="sidebar-title">Account</div>
+    <div class="menu-item" onclick="showToast('Profile Settings')">
+      <div class="menu-icon"><i class="fas fa-id-card"></i></div>
+      <div>Profile</div>
+    </div>
+    <div class="menu-item" onclick="showToast('Security Settings')">
+      <div class="menu-icon"><i class="fas fa-shield-alt"></i></div>
+      <div>Security</div>
+    </div>
+    <div class="menu-item" onclick="showToast('Payment Methods')">
+      <div class="menu-icon"><i class="fas fa-credit-card"></i></div>
+      <div>Payment</div>
+    </div>
+    <div class="menu-item" onclick="showToast('Transaction History')">
+      <div class="menu-icon"><i class="fas fa-history"></i></div>
+      <div>History</div>
+    </div>
+    <div class="menu-item" onclick="scrollToFAQ()">
+      <div class="menu-icon"><i class="fas fa-question-circle"></i></div>
+      <div>FAQ</div>
+    </div>
+    
+    <div class="sidebar-title">Connect</div>
+    <div class="social-links">
+      <div class="social-link" onclick="openSocial('twitter')"><i class="fab fa-twitter"></i></div>
+      <div class="social-link" onclick="openSocial('instagram')"><i class="fab fa-instagram"></i></div>
+      <div class="social-link" onclick="openSocial('linkedin')"><i class="fab fa-linkedin-in"></i></div>
+      <div class="social-link" onclick="openSocial('youtube')"><i class="fab fa-youtube"></i></div>
+    </div>
+    
+    <div class="referral-card">
+      <div class="referral-title">Refer & Earn</div>
+      <div class="referral-text">Get 10% commission on referrals</div>
+      <div class="referral-code">
+        <input type="text" value="APEX-2024-X7K9" readonly>
+        <button class="icon-btn" onclick="copyReferral()" style="width: 40px; height: 40px;"><i class="fas fa-copy"></i></button>
+      </div>
+    </div>
+  </aside>
+  
+  <!-- Right Sidebar -->
+  <aside class="sidebar right" id="rightSidebar">
+    <div class="sidebar-title">Live Markets</div>
+    <div style="margin-bottom: 1.5rem;">
+      <div style="display: flex; justify-content: space-between; padding: 1rem; border-bottom: 1px solid var(--apex-border);">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(212,175,55,0.1); display: flex; align-items: center; justify-content: center;">₿</div>
+          <div>
+            <div style="font-weight: 600; font-size: 0.9rem;">Bitcoin</div>
+            <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">BTC</div>
+          </div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-weight: 700;">£52,340</div>
+          <div style="font-size: 0.8rem; color: var(--success);">+5.2%</div>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; padding: 1rem; border-bottom: 1px solid var(--apex-border);">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(59,130,246,0.1); display: flex; align-items: center; justify-content: center; color: #3b82f6;">Ξ</div>
+          <div>
+            <div style="font-weight: 600; font-size: 0.9rem;">Ethereum</div>
+            <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">ETH</div>
+          </div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-weight: 700;">£2,840</div>
+          <div style="font-size: 0.8rem; color: var(--success);">+3.8%</div>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; padding: 1rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(0,255,163,0.1); display: flex; align-items: center; justify-content: center; color: #00ffa3;">◎</div>
+          <div>
+            <div style="font-weight: 600; font-size: 0.9rem;">Solana</div>
+            <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">SOL</div>
+          </div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-weight: 700;">£98.50</div>
+          <div style="font-size: 0.8rem; color: var(--success);">+12.4%</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="sidebar-title">Live Trades</div>
+    <div id="tradesList">
+      <!-- Populated by JS -->
+    </div>
+    
+    <div class="sidebar-title">Security</div>
+    <div style="padding: 0.75rem; background: rgba(0,208,132,0.05); border: 1px solid rgba(0,208,132,0.2); border-radius: 10px; margin-bottom: 0.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <div style="width: 32px; height: 32px; background: rgba(0,208,132,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--success);"><i class="fas fa-check-circle"></i></div>
+        <div>
+          <div style="font-weight: 600; font-size: 0.9rem;">2FA Enabled</div>
+          <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">Protected</div>
+        </div>
+      </div>
+    </div>
+    <div style="padding: 0.75rem; background: rgba(0,208,132,0.05); border: 1px solid rgba(0,208,132,0.2); border-radius: 10px; margin-bottom: 0.5rem;">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <div style="width: 32px; height: 32px; background: rgba(0,208,132,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--success);"><i class="fas fa-shield-alt"></i></div>
+        <div>
+          <div style="font-weight: 600; font-size: 0.9rem;">Insurance</div>
+          <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">£250K coverage</div>
+        </div>
+      </div>
+    </div>
+    <div style="padding: 0.75rem; background: rgba(0,208,132,0.05); border: 1px solid rgba(0,208,132,0.2); border-radius: 10px;">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <div style="width: 32px; height: 32px; background: rgba(0,208,132,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--success);"><i class="fas fa-vault"></i></div>
+        <div>
+          <div style="font-weight: 600; font-size: 0.9rem;">Cold Storage</div>
+          <div style="font-size: 0.75rem; color: rgba(255,255,255,0.5);">98% secured</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  
+  <!-- Main Content -->
+  <main class="main-content" id="mainContent">
+    
+    <!-- Portfolio Overview -->
+    <div class="section" id="portfolioSection">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title"><i class="fas fa-chart-pie"></i> Portfolio Overview</div>
+        <div class="section-toggle"><i class="fas fa-chevron-down"></i></div>
+      </div>
+      <div class="section-content">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total Balance</div>
+            <div class="stat-value" style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700;">£147,250</div>
+            <div style="color: var(--success); font-size: 0.9rem; margin-top: 0.5rem;"><i class="fas fa-arrow-up"></i> +12.4%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Profit</div>
+            <div class="stat-value" style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--success);">£81,070</div>
+            <div style="color: var(--success); font-size: 0.9rem; margin-top: 0.5rem;"><i class="fas fa-arrow-up"></i> +122.4%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Active Investments</div>
+            <div class="stat-value" style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--apex-gold);">23</div>
+            <div style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-top: 0.5rem;">+3 this week</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Available Cash</div>
+            <div class="stat-value" style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700;">£66,180</div>
+            <div style="color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-top: 0.5rem;">Ready to invest</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Performance Chart -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title"><i class="fas fa-chart-line"></i> Performance Analytics</div>
+        <div class="section-toggle"><i class="fas fa-chevron-down"></i></div>
+      </div>
+      <div class="section-content">
+        <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+          <div class="chart-tab active" onclick="updateChart('1D')">1D</div>
+          <div class="chart-tab" onclick="updateChart('1W')">1W</div>
+          <div class="chart-tab" onclick="updateChart('1M')">1M</div>
+          <div class="chart-tab" onclick="updateChart('1Y')">1Y</div>
+          <div class="chart-tab" onclick="updateChart('ALL')">ALL</div>
+        </div>
+        <div class="chart-container">
+          <canvas id="portfolioChart"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Investment Opportunities -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title"><i class="fas fa-gem"></i> Premium Investment Opportunities</div>
+        <div class="section-toggle"><i class="fas fa-chevron-down"></i></div>
+      </div>
+      <div class="section-content">
+        <div class="investment-grid">
+          <div class="investment-card" onclick="openInvestModal('Alpha Quant Fund')">
+            <div class="investment-header">
+              <div class="investment-title">Alpha Quant Fund</div>
+              <div class="investment-tier">Tier 1</div>
+            </div>
+            <div class="investment-return">+45.2%</div>
+            <div class="investment-desc">AI-driven quantitative strategies with machine learning algorithms.</div>
+            <button class="invest-btn">Invest Now</button>
+          </div>
+          <div class="investment-card" onclick="openInvestModal('Crypto Arbitrage')">
+            <div class="investment-header">
+              <div class="investment-title">Crypto Arbitrage</div>
+              <div class="investment-tier" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">VIP</div>
+            </div>
+            <div class="investment-return" style="color: var(--apex-gold);">+92.4%</div>
+            <div class="investment-desc">Cross-exchange arbitrage exploiting price inefficiencies.</div>
+            <button class="invest-btn">Invest Now</button>
+          </div>
+          <div class="investment-card" onclick="openInvestModal('Real Estate Trust')">
+            <div class="investment-header">
+              <div class="investment-title">Real Estate Trust</div>
+              <div class="investment-tier" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">Core</div>
+            </div>
+            <div class="investment-return" style="color: #3b82f6;">+18.5%</div>
+            <div class="investment-desc">Premium commercial property across UK and Europe.</div>
+            <button class="invest-btn">Invest Now</button>
+          </div>
+          <div class="investment-card" onclick="openInvestModal('Carbon Credits')">
+            <div class="investment-header">
+              <div class="investment-title">Carbon Credits</div>
+              <div class="investment-tier" style="background: linear-gradient(135deg, #22c55e, #16a34a);">ESG</div>
+            </div>
+            <div class="investment-return" style="color: #22c55e;">+56.3%</div>
+            <div class="investment-desc">Sustainable investment in verified carbon offsets.</div>
+            <button class="invest-btn">Invest Now</button>
+          </div>
+          <div class="investment-card" onclick="openInvestModal('Litigation Finance')">
+            <div class="investment-header">
+              <div class="investment-title">Litigation Finance</div>
+              <div class="investment-tier" style="background: linear-gradient(135deg, #f59e0b, #d97706);">Alt</div>
+            </div>
+            <div class="investment-return" style="color: #f59e0b;">+41.5%</div>
+            <div class="investment-desc">Funding high-value legal claims with predictable returns.</div>
+            <button class="invest-btn">Invest Now</button>
+          </div>
+          <div class="investment-card" onclick="openInvestModal('Private Equity')">
+            <div class="investment-header">
+              <div class="investment-title">Private Equity</div>
+              <div class="investment-tier" style="background: linear-gradient(135deg, #ec4899, #db2777);">PE</div>
+            </div>
+            <div class="investment-return" style="color: #ec4899;">+34.8%</div>
+            <div class="investment-desc">Co-investment in late-stage growth companies.</div>
+            <button class="invest-btn">Invest Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Luxury Marketplace -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title"><i class="fas fa-crown"></i> Luxury Marketplace</div>
+        <div class="section-toggle"><i class="fas fa-chevron-down"></i></div>
+      </div>
+      <div class="section-content">
+        <div class="marketplace-grid">
+          <div class="luxury-item" onclick="openLuxuryModal('flight')">
+            <div class="luxury-icon"><i class="fas fa-plane"></i></div>
+            <div class="luxury-title">Private Flights</div>
+            <div class="luxury-price">From £25,000</div>
+          </div>
+          <div class="luxury-item" onclick="openLuxuryModal('house')">
+            <div class="luxury-icon"><i class="fas fa-home"></i></div>
+            <div class="luxury-title">Luxury Real Estate</div>
+            <div class="luxury-price">From £2.5M</div>
+          </div>
+          <div class="luxury-item" onclick="openLuxuryModal('car')">
+            <div class="luxury-icon"><i class="fas fa-car"></i></div>
+            <div class="luxury-title">Exotic Cars</div>
+            <div class="luxury-price">From £150,000</div>
+          </div>
+          <div class="luxury-item" onclick="openLuxuryModal('watch')">
+            <div class="luxury-icon"><i class="fas fa-clock"></i></div>
+            <div class="luxury-title">Luxury Watches</div>
+            <div class="luxury-price">From £50,000</div>
+          </div>
+          <div class="luxury-item" onclick="openLuxuryModal('yacht')">
+            <div class="luxury-icon"><i class="fas fa-ship"></i></div>
+            <div class="luxury-title">Yacht Charter</div>
+            <div class="luxury-price">From £100,000</div>
+          </div>
+          <div class="luxury-item" onclick="openLuxuryModal('art')">
+            <div class="luxury-icon"><i class="fas fa-palette"></i></div>
+            <div class="luxury-title">Fine Art</div>
+            <div class="luxury-price">From £500,000</div>
+          </div>
+          <div class="luxury-item" onclick="openLuxuryModal('wine')">
+            <div class="luxury-icon"><i class="fas fa-wine-bottle"></i></div>
+            <div class="luxury-title">Vintage Wine</div>
+            <div class="luxury-price">From £10,000</div>
+          </div>
+          <div class="luxury-item" onclick="openLuxuryModal('jewelry')">
+            <div class="luxury-icon"><i class="fas fa-gem"></i></div>
+            <div class="luxury-title">Fine Jewelry</div>
+            <div class="luxury-price">From £75,000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- News Section -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title"><i class="fas fa-newspaper"></i> Market Intelligence</div>
+        <div class="section-toggle"><i class="fas fa-chevron-down"></i></div>
+      </div>
+      <div class="section-content">
+        <div class="news-tabs">
+          <div class="news-tab active" onclick="switchNews('trading')">Trading</div>
+          <div class="news-tab" onclick="switchNews('uk')">UK Banking</div>
+          <div class="news-tab" onclick="switchNews('world')">World</div>
+          <div class="news-tab" onclick="switchNews('crypto')">Crypto</div>
+        </div>
+        <div id="newsContainer">
+          <div class="news-item" onclick="readNews(this)">
+            <div class="news-title">Bitcoin Surges Past £52,000 as Institutional Adoption Accelerates</div>
+            <div class="news-meta">
+              <span class="news-source">Bloomberg</span>
+              <span>•</span>
+              <span>2 minutes ago</span>
+            </div>
+          </div>
+          <div class="news-item" onclick="readNews(this)">
+            <div class="news-title">Federal Reserve Signals Potential Rate Cuts in Q2 2026</div>
+            <div class="news-meta">
+              <span class="news-source">Reuters</span>
+              <span>•</span>
+              <span>15 minutes ago</span>
+            </div>
+          </div>
+          <div class="news-item" onclick="readNews(this)">
+            <div class="news-title">Tech Stocks Rally as AI Investment Reaches Record Highs</div>
+            <div class="news-meta">
+              <span class="news-source">CNBC</span>
+              <span>•</span>
+              <span>32 minutes ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Investment History -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title"><i class="fas fa-landmark"></i> Our Investment Legacy</div>
+        <div class="section-toggle"><i class="fas fa-chevron-down"></i></div>
+      </div>
+      <div class="section-content">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">2015</div>
+            <div class="timeline-title">Foundation of Apex Prime Capital</div>
+            <div class="timeline-desc">Established with a vision to democratize institutional-grade investment. Started with £50M in assets serving 200 elite clients.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2017</div>
+            <div class="timeline-title">Expansion into Alternative Investments</div>
+            <div class="timeline-desc">Pioneered retail access to litigation finance and carbon credits. First UK platform to offer tokenized real estate.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2019</div>
+            <div class="timeline-title">AI-Powered Trading Launch</div>
+            <div class="timeline-desc">Introduced Alpha Quant Fund with machine learning. Achieved 47% returns in first year.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2021</div>
+            <div class="timeline-title">Cryptocurrency & Digital Assets</div>
+            <div class="timeline-desc">Launched institutional crypto arbitrage. First regulated platform with insured cold storage.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2023</div>
+            <div class="timeline-title">Global Expansion & £2B Milestone</div>
+            <div class="timeline-desc">Expanded to 15 countries. Surpassed £2 billion AUM. Launched luxury marketplace.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2024</div>
+            <div class="timeline-title">The Future of Wealth</div>
+            <div class="timeline-desc">AI-driven personalized management. Quantum computing risk analytics. £500M ESG mandate.</div>
+          </div>
+        </div>
+        
+        <div style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(20,20,20,0.95)); border: 1px solid var(--apex-border); border-radius: 16px;">
+          <div style="font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; margin-bottom: 1rem; color: var(--apex-gold);">Why Invest With Apex Prime?</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div>
+              <div style="font-weight: 700; margin-bottom: 0.25rem;"><i class="fas fa-shield-alt" style="color: var(--apex-gold); margin-right: 0.5rem;"></i>Institutional Security</div>
+              <div style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">Bank-grade encryption, multi-sig wallets, £250M insurance.</div>
+            </div>
+            <div>
+              <div style="font-weight: 700; margin-bottom: 0.25rem;"><i class="fas fa-chart-line" style="color: var(--apex-gold); margin-right: 0.5rem;"></i>Proven Performance</div>
+              <div style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">34.7% average annual returns. Outperforming since inception.</div>
+            </div>
+            <div>
+              <div style="font-weight: 700; margin-bottom: 0.25rem;"><i class="fas fa-users" style="color: var(--apex-gold); margin-right: 0.5rem;"></i>Expert Management</div>
+              <div style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">Team from Goldman Sachs, Morgan Stanley, BlackRock.</div>
+            </div>
+            <div>
+              <div style="font-weight: 700; margin-bottom: 0.25rem;"><i class="fas fa-globe" style="color: var(--apex-gold); margin-right: 0.5rem;"></i>Global Access</div>
+              <div style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">Trade 24/7 across 50+ exchanges. Exclusive pre-IPO access.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- FAQ Section -->
+    <div class="section" id="faqSection">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-title"><i class="fas fa-question-circle"></i> Frequently Asked Questions</div>
+        <div class="section-toggle"><i class="fas fa-chevron-down"></i></div>
+      </div>
+      <div class="section-content">
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <h4>What is the minimum investment amount?</h4>
+            <div class="faq-icon"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>Our minimum investment starts at £1,000 for most funds. Premium tier investments require £25,000 minimum. VIP exclusive opportunities are available from £100,000. All investments can be made using multiple payment methods including bank transfer, cryptocurrency, PayPal, and gift cards.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <h4>How quickly can I withdraw my funds?</h4>
+            <div class="faq-icon"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>Standard withdrawals are processed within 24-48 hours. Express withdrawals (additional 0.5% fee) are processed within 2 hours. Large withdrawals over £50,000 may require additional security verification taking up to 72 hours. All withdrawals show "Pending" status until processed.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <h4>What security measures protect my account?</h4>
+            <div class="faq-icon"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>We implement military-grade security including: 256-bit SSL encryption, mandatory 2FA authentication, biometric login options, real-time fraud monitoring, £250M insurance coverage, and 98% cold storage for digital assets. Our platform is SOC 2 Type II certified and regulated by the FCA.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <h4>Can I access my investments from mobile?</h4>
+            <div class="faq-icon"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>Yes! Our mobile app is available for iOS and Android with full functionality. Track portfolios, execute trades, deposit/withdraw funds, and access customer support 24/7. The app features biometric authentication and real-time push notifications.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            <h4>What fees does Apex Prime charge?</h4>
+            <div class="faq-icon"><i class="fas fa-plus"></i></div>
+          </div>
+          <div class="faq-answer">
+            <p>We charge a competitive 1.5% annual management fee on most funds. Performance fees of 15% apply only when returns exceed 15% annually. There are no deposit fees, and withdrawal fees range from 0% to 0.5% depending on method. VIP members enjoy reduced fees.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </main>
+  
+  <!-- Bottom Ticker -->
+  <div class="bottom-ticker">
+    <div class="ticker-wrap" id="stockTicker"></div>
+  </div>
+  
+</div>
+
+<!-- Modals -->
+<div class="modal-overlay" id="investModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Make Investment</div>
+      <button class="modal-close" onclick="closeModal('investModal')">×</button>
+    </div>
+    <div>
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.6);">Investment Fund</label>
+        <select class="luxury-input">
+          <option>Select a fund...</option>
+          <option>Alpha Quant Fund (+45.2%)</option>
+          <option>Crypto Arbitrage (+92.4%)</option>
+          <option>Real Estate Trust (+18.5%)</option>
+          <option>Carbon Credits (+56.3%)</option>
+          <option>Litigation Finance (+41.5%)</option>
+          <option>Private Equity (+34.8%)</option>
+        </select>
+      </div>
+      <div style="margin-bottom: 1.5rem;">
+        <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.6);">Amount (£)</label>
+        <input type="number" class="luxury-input" placeholder="Minimum £1,000" min="1000">
+      </div>
+      <div style="margin-bottom: 1.5rem;">
+        <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.6);">Payment Method</label>
+        <div class="payment-grid">
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fab fa-bitcoin"></i>
+            <span>Bitcoin</span>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fab fa-paypal"></i>
+            <span>PayPal</span>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fas fa-gift"></i>
+            <span>Gift Card</span>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fas fa-credit-card"></i>
+            <span>Card</span>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fas fa-university"></i>
+            <span>Bank</span>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fas fa-wallet"></i>
+            <span>Wallet</span>
+          </div>
+        </div>
+      </div>
+      <button class="luxury-btn" onclick="confirmInvestment()">Confirm Investment</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="depositModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Deposit Funds</div>
+      <button class="modal-close" onclick="closeModal('depositModal')">×</button>
+    </div>
+    <div>
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.6);">Amount (£)</label>
+        <input type="number" class="luxury-input" placeholder="Enter amount" min="100">
+      </div>
+      <div style="margin-bottom: 1.5rem;">
+        <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.6);">Payment Method</label>
+        <div class="payment-grid">
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fas fa-credit-card"></i>
+            <span>Credit Card</span>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fas fa-university"></i>
+            <span>Bank Transfer</span>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fab fa-bitcoin"></i>
+            <span>Crypto</span>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fab fa-paypal"></i>
+            <span>PayPal</span>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fas fa-gift"></i>
+            <span>Gift Card</span>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fab fa-apple-pay"></i>
+            <span>Apple Pay</span>
+          </div>
+        </div>
+      </div>
+      <button class="luxury-btn" onclick="confirmDeposit()">Deposit Now</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="withdrawModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Withdraw Funds</div>
+      <button class="modal-close" onclick="closeModal('withdrawModal')">×</button>
+    </div>
+    <div>
+      <div style="margin-bottom: 1rem;">
+        <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.6);">Available: £66,180.00</label>
+        <input type="number" class="luxury-input" placeholder="Enter amount" max="66180">
+      </div>
+      <div style="margin-bottom: 1.5rem;">
+        <label style="display: block; margin-bottom: 0.5rem; color: rgba(255,255,255,0.6);">Withdrawal Method</label>
+        <div class="payment-grid">
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fas fa-university"></i>
+            <span>Bank</span>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fab fa-bitcoin"></i>
+            <span>Crypto</span>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fab fa-paypal"></i>
+            <span>PayPal</span>
+          </div>
+          <div class="payment-method" onclick="selectPayment(this)">
+            <i class="fas fa-credit-card"></i>
+            <span>Card</span>
+          </div>
+        </div>
+      </div>
+      <div style="padding: 1rem; background: rgba(255,193,7,0.1); border: 1px solid rgba(255,193,7,0.3); border-radius: 10px; margin-bottom: 1rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; color: #ffc107; font-weight: 600;">
+          <i class="fas fa-clock"></i> Status: Pending (24-48 hours)
+        </div>
+      </div>
+      <button class="luxury-btn" onclick="confirmWithdrawal()">Request Withdrawal</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="luxuryModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="luxuryModalTitle">Luxury Purchase</div>
+      <button class="modal-close" onclick="closeModal('luxuryModal')">×</button>
+    </div>
+    <div id="luxuryModalContent" style="text-align: center; padding: 2rem;">
+      <i class="fas fa-gem" style="font-size: 4rem; color: var(--apex-gold); margin-bottom: 1rem;"></i>
+      <p style="color: rgba(255,255,255,0.7); margin-bottom: 1.5rem;">Exclusive luxury options curated for our VIP members.</p>
+      <button class="luxury-btn" onclick="showToast('Concierge contacted')">Contact Concierge</button>
+    </div>
+  </div>
+</div>
+
+<!-- Customization Panel -->
+<div class="custom-panel" id="customPanel">
+  <div class="custom-title"><i class="fas fa-paint-brush"></i> Customize</div>
+  <div class="setting-row">
+    <span class="setting-label">Voice Assistance</span>
+    <div class="toggle-switch" id="voiceToggle" onclick="toggleSetting('voice')"></div>
+  </div>
+  <div class="setting-row">
+    <span class="setting-label">Sound Effects</span>
+    <div class="toggle-switch active" id="soundToggle" onclick="toggleSetting('sound')"></div>
+  </div>
+  <div class="setting-row">
+    <span class="setting-label">Notifications</span>
+    <div class="toggle-switch active" id="notifToggle" onclick="toggleSetting('notifications')"></div>
+  </div>
+  <div class="setting-row" style="flex-direction: column; align-items: flex-start;">
+    <span class="setting-label">Glow Intensity</span>
+    <div class="slider-container">
+      <input type="range" min="0" max="100" value="50" oninput="updateGlow(this.value)">
+    </div>
+  </div>
+  <div class="setting-row" style="flex-direction: column; align-items: flex-start;">
+    <span class="setting-label">Accent Color</span>
+    <div class="color-picker">
+      <div class="color-option active" style="background: #D4AF37;" onclick="changeColor('#D4AF37')"></div>
+      <div class="color-option" style="background: #3b82f6;" onclick="changeColor('#3b82f6')"></div>
+      <div class="color-option" style="background: #22c55e;" onclick="changeColor('#22c55e')"></div>
+      <div class="color-option" style="background: #ec4899;" onclick="changeColor('#ec4899')"></div>
+      <div class="color-option" style="background: #8b5cf6;" onclick="changeColor('#8b5cf6')"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Customer Service -->
+<div class="cs-widget">
+  <div class="cs-panel" id="csPanel">
+    <div class="cs-header">
+      <h3 style="font-family: 'Playfair Display', serif;"><i class="fas fa-headset"></i> Premium Support</h3>
+      <p style="font-size: 0.85rem; color: rgba(255,255,255,0.6);">Response time: under 90 seconds</p>
+    </div>
+    <div class="cs-messages" id="csMessages">
+      <div class="cs-message agent">Welcome to Apex Prime! I'm your dedicated concierge. How may I assist you today?</div>
+    </div>
+    <div class="cs-input-area">
+      <input type="text" class="cs-input" placeholder="Type your message..." id="csInput" onkeypress="if(event.key==='Enter')sendCSMessage()">
+      <button class="cs-send" onclick="sendCSMessage()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+  <button class="cs-button" onclick="toggleCS()"><i class="fas fa-concierge-bell"></i></button>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+// State Management
+const state = {
+  voiceEnabled: false,
+  soundEnabled: true,
+  user: { name: '', email: '' }
+};
+
+// User Database
+const firstNames = ['James','Michael','William','David','Robert','John','Richard','Thomas','Charles','Daniel','Matthew','Anthony','Mark','Donald','Steven','Paul','Andrew','Joshua','Kenneth','Kevin','Brian','George','Edward','Ronald','Timothy','Jason','Jeffrey','Ryan','Jacob','Gary','Nicholas','Eric','Jonathan','Stephen','Larry','Justin','Scott','Brandon','Benjamin','Samuel','Gregory','Frank','Raymond','Alexander','Jack','Dennis','Jerry','Tyler','Aaron','Jose','Adam','Nathan','Henry','Douglas','Zachary','Peter','Kyle','Walter','Ethan','Jeremy','Harold','Keith','Christian','Roger','Noah','Gerald','Carl','Terry','Sean','Austin','Arthur','Lawrence','Jesse','Dylan','Bryan','Joe','Jordan','Billy','Bruce','Albert','Willie','Gabriel','Logan','Alan','Juan','Wayne','Roy','Ralph','Randy','Eugene','Vincent','Russell','Elijah','Louis','Bobby','Philip','Johnny','Mary','Patricia','Jennifer','Linda','Elizabeth','Barbara','Susan','Jessica','Sarah','Karen','Nancy','Lisa','Betty','Margaret','Sandra','Ashley','Kimberly','Emily','Donna','Michelle','Dorothy','Carol','Amanda','Melissa','Deborah','Stephanie','Rebecca','Laura','Sharon','Cynthia','Kathleen','Amy','Shirley','Angela','Helen','Anna','Brenda','Pamela','Nicole','Emma','Samantha','Katherine','Christine','Debra','Rachel','Catherine','Carolyn','Janet','Ruth','Maria','Heather','Diane','Virginia','Julie','Joyce','Victoria','Olivia','Kelly','Christina','Lauren','Joan','Evelyn','Judith','Megan','Cheryl','Andrea','Hannah','Martha','Jacqueline','Frances','Gloria','Ann','Teresa','Kathryn','Sara','Janice','Jean','Alice','Madison','Doris','Abigail','Julia','Judy','Grace','Denise','Amber','Marilyn','Beverly','Danielle','Theresa','Sophia','Marie','Diana','Brittany','Natalie','Isabella','Charlotte','Rose','Alexis','Kayla'];
+
+const lastNames = ['Smith','Johnson','Williams','Brown','Jones','Garcia','Miller','Davis','Rodriguez','Martinez','Hernandez','Lopez','Gonzalez','Wilson','Anderson','Thomas','Taylor','Moore','Jackson','Martin','Lee','Perez','Thompson','White','Harris','Sanchez','Clark','Ramirez','Lewis','Robinson','Walker','Young','Allen','King','Wright','Scott','Torres','Nguyen','Hill','Flores','Green','Adams','Nelson','Baker','Hall','Rivera','Campbell','Mitchell','Carter','Roberts','Gomez','Phillips','Evans','Turner','Diaz','Parker','Cruz','Edwards','Collins','Reyes','Stewart','Morris','Morales','Murphy','Cook','Rogers','Gutierrez','Ortiz','Morgan','Cooper','Peterson','Bailey','Reed','Kelly','Howard','Ramos','Kim','Cox','Ward','Richardson','Watson','Brooks','Chavez','Wood','James','Bennett','Gray','Mendoza','Ruiz','Hughes','Price','Alvarez','Castillo','Sanders','Patel','Myers','Long','Ross','Foster','Jimenez','Powell','Jenkins','Perry','Russell','Sullivan','Bell','Coleman','Butler','Henderson','Barnes','Gonzales','Fisher','Vasquez','Simpson','Romero','Jordan','Patterson','Alexander','Hamilton','Graham','Reynolds','Griffin','Wallace','Moreno','West','Cole','Hayes','Bryant','Herrera','Gibson','Ellis','Tran','Medina','Aguilar','Stevens','Murray','Ford','Castro','Marshall','Owens','Harrison','Fernandez','Woods','Washington','Kennedy','Wells','Vargas','Austin','Henry','Chen'];
+
+function generateUser() {
+  return firstNames[Math.floor(Math.random() * firstNames.length)] + ' ' + 
+         lastNames[Math.floor(Math.random() * lastNames.length)];
+}
+
+// Loading Animation
+window.addEventListener('load', () => {
+  let progress = 0;
+  const bar = document.getElementById('loadingProgress');
+  const interval = setInterval(() => {
+    progress += Math.random() * 15;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(interval);
+      setTimeout(() => {
+        document.getElementById('loadingScreen').classList.add('hidden');
+        animateInvestorCards();
+      }, 500);
+    }
+    bar.style.width = progress + '%';
+  }, 200);
+});
+
+function animateInvestorCards() {
+  document.querySelectorAll('.investor-card').forEach((card, i) => {
+    setTimeout(() => card.classList.add('visible'), i * 300);
+  });
+}
+
+// Voice Functions
+function speak(text) {
+  if (!state.voiceEnabled) return;
+  if ('speechSynthesis' in window) {
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9;
+    u.pitch = 1;
+    window.speechSynthesis.speak(u);
+  }
+}
+
+function enableVoice(enable) {
+  state.voiceEnabled = enable;
+  state.soundEnabled = true;
+  document.getElementById('voicePrompt').style.display = 'none';
+  
+  const welcome = document.getElementById('welcomeOverlay');
+  welcome.classList.add('active');
+  speak('Welcome to Apex Prime Capital. Your premium investment platform awaits.');
+  
+  setTimeout(() => {
+    welcome.classList.remove('active');
+    enterDashboard();
+  }, 3000);
+}
+
+// Auth Functions
+function switchTab(tab) {
+  playSound();
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  if (tab === 'login') {
+    document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('registerForm').style.display = 'none';
+  } else {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'block';
+  }
+}
+
+function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+  
+  if (password.length < 6) {
+    document.getElementById('loginPassword').classList.add('error');
+    document.getElementById('loginError').classList.add('visible');
+    playSound('error');
+    return;
+  }
+  
+  state.user.email = email;
+  state.user.name = email.split('@')[0];
+  document.getElementById('voicePrompt').style.display = 'block';
+}
+
+function handleRegister(e) {
+  e.preventDefault();
+  const pass = document.getElementById('regPassword').value;
+  const confirm = document.getElementById('regConfirm').value;
+  
+  if (pass !== confirm) {
+    document.getElementById('regError').classList.add('visible');
+    playSound('error');
+    return;
+  }
+  
+  state.user.email = document.getElementById('regEmail').value;
+  state.user.name = document.getElementById('regName').value;
+  document.getElementById('voicePrompt').style.display = 'block';
+}
+
+function enterDashboard() {
+  document.getElementById('loginSection').style.display = 'none';
+  document.getElementById('dashboard').classList.add('active');
+  
+  document.getElementById('userName').textContent = state.user.name || 'John Doe';
+  document.getElementById('userEmail').textContent = state.user.email || 'john@apexprime.com';
+  document.getElementById('userInitials').textContent = (state.user.name || 'JD').split(' ').map(n => n[0]).join('');
+  
+  initDashboard();
+}
+
+function socialLogin(provider) {
+  playSound();
+  showToast(provider + ' login coming soon');
+}
+
+// Dashboard Init
+function initDashboard() {
+  initChart();
+  startTrades();
+  startWithdrawals();
+  initTicker();
+  speak('Dashboard loaded. Your portfolio is up twelve point four percent this month.');
+}
+
+// Chart
+let portfolioChart;
+function initChart() {
+  const ctx = document.getElementById('portfolioChart').getContext('2d');
+  const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+  gradient.addColorStop(0, 'rgba(212,175,55,0.3)');
+  gradient.addColorStop(1, 'rgba(212,175,55,0)');
+  
+  portfolioChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      datasets: [{
+        data: [100000,115000,108000,125000,138000,142000,155000,148000,162000,175000,168000,147250],
+        borderColor: '#D4AF37',
+        backgroundColor: gradient,
+        fill: true,
+        tension: 0.4,
+        borderWidth: 3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: 'rgba(255,255,255,0.5)' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+        y: { ticks: { color: 'rgba(255,255,255,0.5)', callback: v => '£' + v.toLocaleString() }, grid: { color: 'rgba(255,255,255,0.05)' } }
+      }
+    }
+  });
+}
+
+function updateChart(period) {
+  playSound();
+  document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// Live Trades
+function startTrades() {
+  const list = document.getElementById('tradesList');
+  for (let i = 0; i < 5; i++) addTrade();
+  setInterval(addTrade, 4000);
+}
+
+function addTrade() {
+  const user = generateUser();
+  const type = Math.random() > 0.5 ? 'buy' : 'sell';
+  const amount = Math.floor(Math.random() * 100000) + 5000;
+  const initials = user.split(' ').map(n => n[0]).join('');
+  
+  const list = document.getElementById('tradesList');
+  const item = document.createElement('div');
+  item.className = 'trade-item';
+  item.innerHTML = `
+    <div class="trade-user">
+      <div class="trade-avatar">${initials}</div>
+      <div class="trade-info">
+        <h4>${user}</h4>
+        <span>${new Date().toLocaleTimeString()}</span>
+      </div>
+    </div>
+    <div class="trade-amount">£${amount.toLocaleString()}</div>
+    <div class="trade-type ${type}">${type}</div>
+  `;
+  list.insertBefore(item, list.firstChild);
+  if (list.children.length > 15) list.removeChild(list.lastChild);
+}
+
+// Withdrawal Notifications
+function startWithdrawals() {
+  setInterval(() => {
+    const user = generateUser();
+    const amount = Math.floor(Math.random() * 500000) + 50000;
+    showToastWithAmount(user + ' withdrew', '£' + amount.toLocaleString());
+  }, 8000);
+}
+
+// Stock Ticker
+function initTicker() {
+  const stocks = [
+    {s:'AAPL',p:182.45,c:1.2},{s:'MSFT',p:378.92,c:0.8},{s:'GOOGL',p:142.56,c:-0.3},
+    {s:'AMZN',p:155.23,c:1.5},{s:'TSLA',p:245.67,c:2.1},{s:'NVDA',p:495.12,c:3.4},
+    {s:'META',p:325.89,c:0.5},{s:'NFLX',p:445.23,c:-1.2},{s:'AMD',p:145.67,c:1.8},
+    {s:'INTC',p:42.34,c:-0.5},{s:'BABA',p:78.92,c:2.3},{s:'TSM',p:105.45,c:1.1}
+  ];
+  const ticker = document.getElementById('stockTicker');
+  const html = stocks.map(s => `
+    <div class="ticker-item">
+      <span class="ticker-symbol">${s.s}</span>
+      <span>£${s.p}</span>
+      <span style="color:${s.c>=0?'#00D084':'#FF4757'}">${s.c>=0?'+':''}${s.c}%</span>
+    </div>
+  `).join('');
+  ticker.innerHTML = html + html;
+}
+
+// UI Functions
+function toggleSidebar(side) {
+  playSound();
+  document.getElementById(side + 'Sidebar').classList.toggle('collapsed');
+  document.getElementById('mainContent').classList.toggle(side + '-closed');
+}
+
+function toggleSection(header) {
+  playSound();
+  header.parentElement.classList.toggle('collapsed');
+}
+
+function toggleFaq(el) {
+  playSound();
+  el.parentElement.classList.toggle('active');
+}
+
+function switchNews(type) {
+  playSound();
+  document.querySelectorAll('.news-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  const news = {
+    trading: [
+      {t:'Bitcoin Surges Past £52,000 as Institutional Adoption Accelerates',s:'Bloomberg',time:'2 min ago'},
+      {t:'Tech Stocks Rally as AI Investment Reaches Record Highs',s:'CNBC',time:'32 min ago'},
+      {t:'European Markets Close Higher on Energy Sector Gains',s:'FT',time:'1 hour ago'}
+    ],
+    uk: [
+      {t:'Bank of England Holds Interest Rates at 5.25%',s:'BBC',time:'15 min ago'},
+      {t:'UK House Prices Rise for Third Consecutive Month',s:'Guardian',time:'1 hour ago'},
+      {t:'Barclays Reports Record Profits in Q4 2024',s:'Reuters',time:'2 hours ago'}
+    ],
+    world: [
+      {t:'Federal Reserve Signals Potential Rate Cuts in Q2 2026',s:'Reuters',time:'15 min ago'},
+      {t:'Asian Markets Rally on China Stimulus Hopes',s:'Nikkei',time:'45 min ago'},
+      {t:'ECB Maintains Rates Amid Inflation Concerns',s:'Bloomberg',time:'1 hour ago'}
+    ],
+    crypto: [
+      {t:'Ethereum ETF Approval Expected by SEC',s:'CoinDesk',time:'10 min ago'},
+      {t:'Solana Network Reaches Record Transaction Volume',s:'CryptoNews',time:'30 min ago'},
+      {t:'Bitcoin Mining Difficulty Hits All-Time High',s:'Cointelegraph',time:'1 hour ago'}
+    ]
+  };
+  
+  const container = document.getElementById('newsContainer');
+  container.innerHTML = news[type].map(n => `
+    <div class="news-item" onclick="readNews(this)">
+      <div class="news-title">${n.t}</div>
+      <div class="news-meta">
+        <span class="news-source">${n.s}</span>
+        <span>•</span>
+        <span>${n.time}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function readNews(el) {
+  playSound();
+  const title = el.querySelector('.news-title').textContent;
+  speak('Reading: ' + title);
+  showToast('Opening article...');
+}
+
+// Modals
+function openModal(id) {
+  playSound();
+  document.getElementById(id).classList.add('active');
+}
+
+function closeModal(id) {
+  playSound();
+  document.getElementById(id).classList.remove('active');
+}
+
+function openInvestModal(fund) {
+  playSound();
+  openModal('investModal');
+}
+
+function openLuxuryModal(type) {
+  playSound();
+  const titles = {flight:'Private Flight',house:'Luxury Real Estate',car:'Exotic Car',watch:'Luxury Watch',yacht:'Yacht Charter',art:'Fine Art',wine:'Vintage Wine',jewelry:'Fine Jewelry'};
+  document.getElementById('luxuryModalTitle').textContent = titles[type];
+  openModal('luxuryModal');
+}
+
+function selectPayment(el) {
+  playSound();
+  document.querySelectorAll('.payment-method').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function confirmInvestment() {
+  playSound('success');
+  closeModal('investModal');
+  showToast('Investment confirmed! Welcome to the fund.');
+  speak('Investment confirmed. Thank you for your trust in Apex Prime Capital.');
+}
+
+function confirmDeposit() {
+  playSound('success');
+  closeModal('depositModal');
+  showToast('Deposit processed successfully!');
+}
+
+function confirmWithdrawal() {
+  playSound('success');
+  closeModal('withdrawModal');
+  showToast('Withdrawal request submitted. Status: Pending');
+  speak('Your withdrawal request has been submitted and is pending approval.');
+}
+
+// Customization
+function toggleCustom() {
+  playSound();
+  document.getElementById('customPanel').classList.toggle('active');
+}
+
+function toggleSetting(s) {
+  playSound();
+  event.target.classList.toggle('active');
+  if (s === 'voice') state.voiceEnabled = event.target.classList.contains('active');
+  if (s === 'sound') state.soundEnabled = event.target.classList.contains('active');
+}
+
+function updateGlow(val) {
+  document.documentElement.style.setProperty('--glow-intensity', val / 100);
+}
+
+function changeColor(color) {
+  playSound();
+  document.documentElement.style.setProperty('--apex-gold', color);
+  document.querySelectorAll('.color-option').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  if (portfolioChart) {
+    portfolioChart.data.datasets[0].borderColor = color;
+    portfolioChart.update();
+  }
+}
+
+// Customer Service
+function toggleCS() {
+  playSound();
+  document.getElementById('csPanel').classList.toggle('active');
+}
+
+function sendCSMessage() {
+  const input = document.getElementById('csInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  
+  playSound();
+  const container = document.getElementById('csMessages');
+  
+  const userDiv = document.createElement('div');
+  userDiv.className = 'cs-message user';
+  userDiv.textContent = msg;
+  container.appendChild(userDiv);
+  
+  input.value = '';
+  container.scrollTop = container.scrollHeight;
+  
+  setTimeout(() => {
+    const agentDiv = document.createElement('div');
+    agentDiv.className = 'cs-message agent';
+    agentDiv.textContent = 'Thank you for your message. A senior advisor will assist you shortly.';
+    container.appendChild(agentDiv);
+    container.scrollTop = container.scrollHeight;
+    playSound('notification');
+  }, 1500);
+}
+
+// Utilities
+function playSound(type) {
+  if (!state.soundEnabled) return;
+  // Audio feedback would go here
+}
+
+function showToast(msg) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `
+    <div class="toast-icon"><i class="fas fa-info-circle"></i></div>
+    <div class="toast-content"><h4>${msg}</h4></div>
+  `;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+function showToastWithAmount(msg, amount) {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `
+    <div class="toast-icon"><i class="fas fa-check-circle"></i></div>
+    <div class="toast-content"><h4>${msg}</h4></div>
+    <div class="toast-amount">${amount}</div>
+  `;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 5000);
+}
+
+function navigate(page) {
+  playSound();
+  showToast('Navigating to ' + page + '...');
+}
+
+function toggleNotifs() {
+  playSound();
+  showToast('No new notifications');
+}
+
+function toggleProfile() {
+  playSound();
+  showToast('Profile opened');
+}
+
+function uploadAvatar() {
+  playSound();
+  showToast('Avatar upload feature');
+}
+
+function copyReferral() {
+  playSound();
+  showToast('Referral code copied!');
+}
+
+function openSocial(platform) {
+  playSound();
+  window.open('https://' + platform + '.com', '_blank');
+}
+
+function scrollToFAQ() {
+  playSound();
+  document.getElementById('faqSection').scrollIntoView({behavior: 'smooth'});
+}
+
+function logout() {
+  playSound();
+  location.reload();
+}
+
+// Close modals on click outside
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.classList.remove('active');
+  });
+});
+</script>
+</body>
+</html>
